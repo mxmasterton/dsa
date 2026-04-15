@@ -2,6 +2,14 @@
 
 #include "dynamic_array.h"
 
+/*
+typedef struct {
+    int* data;
+    size_t size;
+    size_t capacity;
+} dynamic_array_t;
+*/
+
 // lifecycle
 dynamic_array_t* create_dynamic_array() {
     dynamic_array_t* array = malloc(sizeof(dynamic_array_t));
@@ -70,12 +78,14 @@ int dynamic_array_pop(dynamic_array_t* array, int* out) {
     }
 
     array->size--;
-    *out = array->data[array->size];
+    if (out) {
+        *out = array->data[array->size];
+    }
     return 1;
 }
 
 int dynamic_array_get(const dynamic_array_t* array, size_t index, int* out) {
-    if (!array || !array->data) {
+    if (!array || !array->data || !out) {
         return 0;
     }
 
@@ -135,7 +145,9 @@ int dynamic_array_remove(dynamic_array_t* array, size_t index, int* out) {
         return 0;
     }
 
-    *out = array->data[index];
+    if (out) {
+        *out = array->data[index];
+    }
 
     // shift elements left
     for (size_t i = index; i < array->size - 1; i++) {
@@ -148,7 +160,7 @@ int dynamic_array_remove(dynamic_array_t* array, size_t index, int* out) {
 
 // helper functions
 int dynamic_array_size(const dynamic_array_t* array, size_t* out) {
-    if (!array) {
+    if (!array || !out) {
         return 0;
     }
 

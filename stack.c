@@ -3,6 +3,12 @@
 #include "stack.h"
 #include "dynamic_array.h"
 
+/*
+typedef struct {
+    dynamic_array_t* data;
+} stack_t;
+*/
+
 // lifecycle
 stack_t* create_stack() {
     stack_t* stack = malloc(sizeof(stack_t));
